@@ -23,4 +23,6 @@ int	ft_moveleft(char *str);
 t_point **ft_move_tmn(char *str);
 char **ft_create_map(int size);
 int	ft_minsize(int quantity);
+int ft_check_map(char **map, char *str, int x, int y);
+char **ft_place(char **map, char *str, int x, int y);
 #endif
