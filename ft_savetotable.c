@@ -87,3 +87,45 @@ char	**ft_save_tmn(char *str)
 	save[len] = NULL;
 	return (save);
 }
+
+char	**ft_clean(char **str)
+{
+	int i; 
+	int j;
+	int t;
+	int search;
+
+	i = 0;
+	search = 0;
+	while (str[i])
+	{
+		j  = 0;
+		t = 0;
+		while (t != 4)
+		{
+			while (str[i][j] > 'Z' || str[i][j] < 'A')
+			++j;
+			while (str[i][j] >= 'A' && str[i][j] <= 'Z')
+			{
+				j++;
+				t++;
+			}
+			if (t != 4)
+			{	
+				while (str[i][j] != '\n')
+				{	
+					search = j;
+					while (str[i][search + 1] != '\0')
+					{
+						str[i][search] = str[i][search + 1];
+						++search;
+					}
+				}		
+			}		
+			else
+				str[i][j] = '\0';
+		}
+		i++;
+	}
+	return (str);
+}

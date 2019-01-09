@@ -10,27 +10,26 @@ int	ft_minsize(int quantity)
 	quantity = quantity * 5;
 	while (quantity > (i * i))
 		++i;
-	return (i);
+	return (i - 1);
 }
 
-char **ft_create_map(int size)
+char **ft_create_map(int size, char **map)
 {
-	char **map;
 	int i;
 	int j;
 
 	j = 0;
-	if (!(map = (char **)malloc((sizeof(char*) * size))))
+	if (!(map = (char **)malloc((sizeof(char*) * size + 1))))
 		return (NULL);
 	while (j < size)
 	{
 		int i = 0;
-		map[j] = (char *)malloc((sizeof(char) * size));
+		map[j] = (char *)malloc((sizeof(char) * size + 1));
 		while(i < size)
 			map[j][i++] = '.';
 		map[j][size] = '\0'; 
 		j++;
-	}
+		}
 	map[size] = NULL;
 	return (map);
 }
@@ -38,31 +37,42 @@ char **ft_create_map(int size)
 int		ft_check_map(char **map, char *str, int x, int y)
 {
 	int i;
-
+	int flag;
+	int limit;
+	
+	flag = y;
 	i = 0;
-
-	//	if (x > 3 || y > 3)
-	//	{
-	//		write(1, "Coordinate error\n", 17);
-	//	return (0);
-	//	} depends on size of map
+	limit = 0;
+	while (map[limit])
+		++limit;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\n' || map[x][y] == '\0')
+		if (str[i] == '\n')
 		{
+			if (x == limit - 1)
+				return (0);
 			x++;
-			y = 0;
-		}
-		if ((str[i] == '.') || (str[i] == '\n') || ((str[i] != '\n'
-						&& str[i] != '.') && map[x][y] == '.'))
-		{
 			++i;
-			++y;
+			y = flag;
 		}
-		if ((map[x][y] != '.' && map[x][y] != '\n') && 
-				((str[i] != '.' && str[i] != '\n' && str[i] != '\0')))
+		if (map[x][y] == '\0' || str[i] == '\n')
 			return (0);
-		++i;
+		if (str[i] == '.')
+		{
+			i++;
+			y++;
+		}	
+		if (str[i] >= 'A' && str[i] <= 'Z')
+		{
+			if (map[x][y] == '.')
+			{
+				i++;
+				y++;
+			}
+		}
+		if ((map[x][y] >= 'A' && map[x][y] <= 'Z' && str[i] >= 'A' 
+			&& str[i] <= 'Z'))
+			return (0);
 	}
 	return (1);
 }
@@ -70,22 +80,23 @@ int		ft_check_map(char **map, char *str, int x, int y)
 char **ft_place(char **map, char *str, int x, int y)
 {
 	int i;
+	int flag;
 
 	i = 0;
+	flag = y;
 	//	if (x > 3 || y > 3)
 	//	{
 	//		write(1, "Coordinate error\n", 17);
 	//		return (0);
 	//	} // depends on size of map
 	while (str[i] != '\0')
-	{		
-		if (str[i] == '\n' || map[x][y] == '\0')
-		{	
-			++x;
-			y = 0;
-		}
+	{	
 		if (str[i] == '\n')
+		{
+			x++;
 			++i;
+			y = flag;
+		}
 		if ((str[i] >= 'A' && str[i] <= 'Z'))	
 			map[x][y] = str[i];
 		++i;
