@@ -7,6 +7,7 @@ static int ft_valide_len(const char *str)
 	int htg;
 
 	i = 0;
+	//added the != '\n to take into account additional newlines at the beginning of file
 	while (str[0] != '\n' && i < 546 && str[i])
 	{
 		dot = 0;
@@ -28,6 +29,7 @@ static int ft_valide_len(const char *str)
 	}
 	return (-1);
 }
+//I wrote this just to shorten ft_vaidate_tmn for the norme
 static int	ft_next(int i, int x, const char *str)
 {
 	while (x < 20)
@@ -76,6 +78,7 @@ int ft_1validate(char *str)
 	x = 0;
 	htg = 0;
 	i = 0;
+	//I added this line as it was still trying to solve with 27/28 tmn
 	if (ft_count_tmn(str) > 26 || ft_count_tmn(str) < 1)
 		return (-1);
 	if (ft_valide_len(str) == 1 && ft_valide_tmn(str, i, htg, x) == 1)
