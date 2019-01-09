@@ -52,7 +52,7 @@ int		ft_moveup(char *str)
 
 }
 
-
+//saves it to table
 char	**ft_save_tmn(char *str)
 {
 	int i;
@@ -87,7 +87,15 @@ char	**ft_save_tmn(char *str)
 	save[len] = NULL;
 	return (save);
 }
-
+//this is to clean unnecessary dots i.e
+//.#..\n
+//##..\n
+//.#..\n
+//....\0
+//becomes
+//.#\n
+//##\n
+//.#\0
 char	**ft_clean(char **str)
 {
 	int i; 
