@@ -1,108 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_create_map.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/10 20:44:25 by fcahill           #+#    #+#             */
+/*   Updated: 2019/01/10 21:47:20 by fcahill          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 #include "libft/libft.h"
 
-
-int	ft_minsize(int quantity)
+int		ft_minsize(int quantity)
 {
-	int i;
+	int		i;
 
 	i = 1;
-	quantity = quantity * 5;
+	quantity = quantity * 4;
 	while (quantity > (i * i))
 		++i;
-	return (i - 1);
+	return (i);
 }
 
-char **ft_create_map(int size, char **map)
+char	**ft_create_map(int size, char **map)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	j = 0;
 	if (!(map = (char **)malloc((sizeof(char*) * size + 1))))
 		return (NULL);
 	while (j < size)
 	{
-		int i = 0;
+		i = 0;
 		map[j] = (char *)malloc((sizeof(char) * size + 1));
-		while(i < size)
+		while (i < size)
 			map[j][i++] = '.';
-		map[j][size] = '\0'; 
+		map[j][size] = '\0';
 		j++;
-		}
+	}
 	map[size] = NULL;
 	return (map);
 }
+
 //Checking if there are the necessary blank spaces on map
-int		ft_check_map(char **map, char *str, int x, int y)
+//
+//Limit should be size of map minus 1 to take in account the /o and /n
+int		ft_check_map(char **map, char *str, t_point x, int limit)
 {
-	int i;
-	int flag;
-	int limit;
-	
-	flag = y;
+	int		i;
+	int		start;
+
+	start = x.y;
 	i = 0;
-	limit = 0;
-	while (map[limit])
-		++limit;
+	//	if (x.x == limit && x.y == limit)
+	//		return (-1); these lines are necessary but they are in the main for now for length reasons. They can be in the solver function after. 
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\n')
+		if (str[i] == '\n' && (i++ || 1))
 		{
-			if (x == limit - 1)
+			if (x.x == limit)
 				return (0);
-			x++;
-			++i;
-			y = flag;
+			x.x++;
+			x.y = start;
 		}
-		if (map[x][y] == '\0' || str[i] == '\n')
-			return (0);
-		if (str[i] == '.')
+		if (str[i] == '.' && (i++ || 1))
+			x.y++;
+		if ((str[i] >= 'A' && str[i] <= 'Z') && (i++ || 1))
 		{
-			i++;
-			y++;
-		}	
-		if (str[i] >= 'A' && str[i] <= 'Z')
-		{
-			if (map[x][y] == '.')
-			{
-				i++;
-				y++;
-			}
+			if (map[x.x][x.y] == '.')
+				x.y++;
+			else
+				return (0);
 		}
-		if ((map[x][y] >= 'A' && map[x][y] <= 'Z' && str[i] >= 'A' 
-			&& str[i] <= 'Z'))
-			return (0);
 	}
 	return (1);
 }
 
-char **ft_place(char **map, char *str, int x, int y)
+char	**ft_place(char **map, char *str, int x, int y)
 {
-	int i;
-	int flag;
+	int		i;
+	int		start;
 
 	i = 0;
-	flag = y;
-	//	if (x > 3 || y > 3)
-	//	{
-	//		write(1, "Coordinate error\n", 17);
-	//		return (0);
-	//	} // depends on size of map
+	start = y;
 	while (str[i] != '\0')
-	{	
+	{
 		if (str[i] == '\n')
 		{
-			x++;
+			++x;
 			++i;
-			y = flag;
+			y = start;
 		}
-		if ((str[i] >= 'A' && str[i] <= 'Z'))	
+		if ((str[i] >= 'A' && str[i] <= 'Z'))
 			map[x][y] = str[i];
 		++i;
 		++y;
+	}
+	return (map);
 }
-return (map);
-}
-
-
