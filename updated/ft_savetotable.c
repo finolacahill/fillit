@@ -27,31 +27,28 @@ char	*ft_moveup(char *str)
 
 char	*ft_moveleft(char *str)
 {
-	int i;
-	int n;
-	int flag;
+	INIT_2
 
-	flag = 1;
-	while (str[0] == '.' && flag == 1)
+	j = 1;
+	while (str[0] == '.' && j == 1)
 	{ 
 		i = 0;
-		n = 0;
+		t = 0;
 		while (str[i])
 		{
 			if (str[i] == '\n' && (str[i + 1] != '.' && str[i + 1] != '\0'))
-					flag = 0;
+					j = 0;
 			i++;
 		}
 		i = 0;
-		while (flag == 1 && (n != 4))
+		while (j == 1 && (t != 4))
 		{
-			if (ft_isalpha(str[i]) == 1)
+			if ((++i || 1) && ft_isalpha(str[i]) == 1)
 			{
 				str[i - 1] = str[i];
 				str[i] = '.';
-				n++;
+				t++;
 			}
-			i++;
 		}
 
 	}
