@@ -6,7 +6,7 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 21:47:33 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/11 22:56:38 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/11 23:18:17 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ char	**ft_backtracking(char **map, char **table, int i,  t_position z)
 	y.x = 0;
 	y.y = 0;
 	ft_place(map, table[i], z.current.x, z.current.y);	
-	ft_printmap(map, size);
-	printf("\n---------\n");
+//	ft_printmap(map, size);
+//	printf("\n---------\n");
 	i++;
 	if (table[i] != NULL)
 	{
@@ -114,9 +114,9 @@ char	**ft_backtracking(char **map, char **table, int i,  t_position z)
 			//	printf("%s\n", table[i]);
 			if (z.current.x < 0)
 			{
-				printf("fail\n");
-				ft_printmap(map, size);
-				printf("-----------\n\n");
+//				printf("fail\n");
+//				ft_printmap(map, size);
+//				printf("-----------\n\n");
 				map[0] = NULL;
 				return (map);
 			}
@@ -145,7 +145,7 @@ char **ft_solving(char **map, char **table, t_position z, int i)
 		size++;
 		i = 0;
 		map = ft_create_map(size, map);
-		printf("x = %d y = %d\n\n", z.current.x, z.current.y);
+	//	printf("x = %d y = %d\n\n", z.current.x, z.current.y);
 		ft_backtracking(map, table, i, z);
 	}
 	return (map);
