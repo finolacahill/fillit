@@ -3,56 +3,58 @@
 #define INIT_1 int i; int j; int k; char **save; char c; int len
 #define INIT_2 int i; int j; int t;
 
-int		ft_moveup(char *str)
+char	*ft_moveup(char *str)
 {
 	int i;
+	int n;
 
-	i = 0;
-
-	if (str[0] == '.' && str[1] == '.' &&
-			str[2] == '.' && str[3] == '.')
-	{	
-		while (i < 15)
-		{
-			if (str[i] != '\n')
-				str[i] = str[i + 5];
-			++i;
-		}
-		while (str[i] != '\n')
-		{
-			str[i] = '.';
-			++i;
-		}
-		return (1);
-	}
-	return (0);
-
-}
-
-int		ft_moveleft(char *str)
-{
-	int i;
-
-	i = 0;
-	if (str[0] == '.' && str[5] == '.' && 
-			str[10] == '.' && str[15] == '.')
+	n = 19;
+	while ((str[0] == '.' && str[1] == '.' &&
+				str[2] == '.' && str[3] == '.'))
 	{
-		while(i < 18)
+		i = 0;
+		n = n - 5;
+		while (i < n)
 		{
-			if (str[i + 1] != '\n')
-				str[i] = str[i + 1];
-			else
-			{	
-				str[i] = str[i + 2];
-				++i;
-			}
+			str[i] = str[i + 5];
 			++i;
 		}
-		str[18] = '.';
-		return (1);
+		str[n] = '\0';
 	}
-	return (0);
+	return (str);
+
 }
+
+char	*ft_moveleft(char *str)
+{
+	INIT_2
+
+	j = 1;
+	while (str[0] == '.' && j == 1)
+	{ 
+		i = 0;
+		t = 0;
+		while (str[i])
+		{
+			if (str[i] == '\n' && (str[i + 1] != '.' && str[i + 1] != '\0'))
+					j = 0;
+			i++;
+		}
+		i = 0;
+		while (j == 1 && (t != 4))
+		{
+			if ((++i || 1) && ft_isalpha(str[i]) == 1)
+			{
+				str[i - 1] = str[i];
+				str[i] = '.';
+				t++;
+			}
+		}
+
+	}
+	return (str);
+}
+
 
 char	**ft_save_tmn(char *str)
 {
@@ -65,7 +67,7 @@ char	**ft_save_tmn(char *str)
 	while (j < len)
 	{
 		k = 0;
-		if (!(save[j] = (char *)malloc(sizeof(char) * 20)))  // why 25 and not 20
+		if (!(save[j] = (char *)malloc(sizeof(char) * 21)))  // why 25 and not 20
 			return (NULL);
 		while (k < 20)
 		{
@@ -73,7 +75,7 @@ char	**ft_save_tmn(char *str)
 				str[i] = c;
 			save[j][k++] = str[i++];
 		}
-		save[j++][k + 1] = '\0';
+		save[j++][20] = '\0';
 		++i;
 		c++;
 	}
@@ -81,50 +83,6 @@ char	**ft_save_tmn(char *str)
 	return (save);
 }
 
-char	**ft_findnewline(char **str, int i, int j)
-{
-	int search;
-
-	search = 0;
-	while (str[i][j] != '\n')
-	{
-		search = j;
-		while (str[i][search + 1] != '\0')
-		{
-			str[i][search] = str[i][search + 1];
-			++search;
-		}
-	}
-	return (str);
-}
-
-char	**ft_clean(char **str)
-{
-	INIT_2
-
-	i = 0;
-	while (str[i])
-	{
-		j  = 0;
-		t = 0;
-		while (t != 4)
-		{
-			while (str[i][j] > 'Z' || str[i][j] < 'A')
-				j++;
-			while (str[i][j] >= 'A' && str[i][j] <= 'Z')
-			{
-				j++;
-				t++;
-			}
-			if (t != 4)
-				str = ft_findnewline(str, i, j);
-			else
-				str[i][j] = '\0';
-		}
-		i++;
-	}
-	return (str);
-}
 
 char **ft_savetotable(char *str)
 {
@@ -132,8 +90,8 @@ char **ft_savetotable(char *str)
 	char **table = ft_save_tmn(str); 
 	while (table[n])
 	{
-		while (ft_moveup(table[n]) == 1);
-		while (ft_moveleft(table[n]) == 1);
+		table[n] = ft_moveup(table[n]);
+		table[n] = ft_moveleft(table[n]);
 		n++;
 	}
 	ft_clean(table);
