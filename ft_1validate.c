@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_1validate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fboudyaf <fboudyaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 12:53:10 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/16 18:36:17 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/17 13:26:33 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	ft_valide_len(const char *str, int dot, int htg)
 	{
 		dot = 0;
 		htg = 0;
-		while (str[i] != '\n' || (str[i] == '\n' && (str[i + 1] == '.'
-						|| str[i + 1] == '#')))
+		while (str[i] && (str[i] == '.' || str[i] == '#' || (str[i] == '\n'
+				&& (str[i + 1] == '.' || str[i + 1] == '#'))))
 		{
 			if (str[i] == '#')
 				htg++;

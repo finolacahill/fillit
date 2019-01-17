@@ -6,7 +6,7 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 21:47:33 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/16 19:57:36 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/17 13:37:14 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,14 @@ char			**ft_backtracking(char **map, char **table, int i, t_point z)
 void			ft_solving(char **map, char *str, t_point z)
 {
 	int			size;
-	int			count;
 	int			i;
 	char		**table;
 
 	i = 0;
-	count = ft_count_tmn(str);
 	table = ft_savetotable(str);
-	size = ft_minsize(count, table);
+	if (table == NULL)
+		return (ft_putstr("error\n"));
+	size = ft_minsize(ft_count_tmn(str), table);
 	map = ft_create_map(size, map);
 	if (map == NULL)
 		return (ft_putstr("error\n"));
@@ -125,6 +125,6 @@ void			ft_solving(char **map, char *str, t_point z)
 		ft_backtracking(map, table, i, z);
 	}
 	ft_printmap(map, size);
-	ft_freearray(table, count);
+	ft_freearray(table, ft_count_tmn(str));
 	ft_freearray(map, size);
 }

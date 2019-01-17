@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_savetotable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fboudyaf <fboudyaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 13:25:38 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/16 11:03:49 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/17 13:36:45 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ char		**ft_savetotable(char *str)
 	if (!(table = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	table = ft_save_tmn(str, len, table);
+	if (table == NULL)
+		return (NULL);
 	len = 0;
 	while (table[n])
 	{
