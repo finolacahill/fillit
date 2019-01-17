@@ -1,12 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_savetotable.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 13:25:38 by fcahill           #+#    #+#             */
+/*   Updated: 2019/01/16 11:03:49 by fcahill          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-#define INIT_1 int i; int j; int k; char **save; char c; int len
-#define INIT_2 int i; int j; int t;
-
-char	*ft_moveup(char *str)
+static char	*ft_moveup(char *str)
 {
-	int i;
-	int n;
+	int		i;
+	int		n;
 
 	n = 19;
 	while ((str[0] == '.' && str[1] == '.' &&
@@ -22,22 +31,21 @@ char	*ft_moveup(char *str)
 		str[n] = '\0';
 	}
 	return (str);
-
 }
 
-char	*ft_moveleft(char *str)
+static char	*ft_moveleft(char *str, int i, int t)
 {
-	INIT_2
+	int		j;
 
 	j = 1;
 	while (str[0] == '.' && j == 1)
-	{ 
+	{
 		i = 0;
 		t = 0;
 		while (str[i])
 		{
 			if (str[i] == '\n' && (str[i + 1] != '.' && str[i + 1] != '\0'))
-					j = 0;
+				j = 0;
 			i++;
 		}
 		i = 0;
@@ -50,50 +58,87 @@ char	*ft_moveleft(char *str)
 				t++;
 			}
 		}
-
 	}
 	return (str);
 }
 
-
-char	**ft_save_tmn(char *str)
+static char	**ft_convert(char **table, int len)
 {
-	INIT_1; 
-	c = 'A';
+	int		t;
+	int		i;
+	int		j;
+	char	c;
+
 	i = 0;
 	j = 0;
-	len = ft_count_tmn(str);
-	save = (char **)malloc(sizeof(char *) * len + 1);
-	while (j < len)
+	c = 'A';
+	while (i < len)
 	{
-		k = 0;
-		if (!(save[j] = (char *)malloc(sizeof(char) * 21)))  // why 25 and not 20
-			return (NULL);
-		while (k < 20)
+		t = 0;
+		j = 0;
+		while (t != 4)
 		{
-			if (str[i] == '#')
-				str[i] = c;
-			save[j][k++] = str[i++];
+			if (table[i][j] == '#')
+			{
+				table[i][j] = c;
+				++t;
+			}
+			++j;
 		}
-		save[j++][20] = '\0';
+		++c;
 		++i;
-		c++;
 	}
-	save[len] = NULL;
-	return (save);
+	return (table);
 }
 
-
-char **ft_savetotable(char *str)
+static char	**ft_save_tmn(char *str, int len, char **table)
 {
-	int n = 0;
-	char **table = ft_save_tmn(str); 
+	int		i;
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	while (j < len)
+	{
+		i = 0;
+		if (!(table[j] = (char*)malloc(sizeof(char) * 21)))
+			return (NULL);
+		while (i < 20)
+		{
+			table[j][i] = str[k];
+			i++;
+			k++;
+		}
+		table[j][20] = '\0';
+		k++;
+		j++;
+	}
+	table[len] = NULL;
+	table = ft_convert(table, len);
+	return (table);
+}
+
+char		**ft_savetotable(char *str)
+{
+	int		n;
+	int		i;
+	int		len;
+	char	**table;
+
+	n = 0;
+	i = 0;
+	len = ft_count_tmn(str);
+	if (!(table = (char**)malloc(sizeof(char*) * (len + 1))))
+		return (NULL);
+	table = ft_save_tmn(str, len, table);
+	len = 0;
 	while (table[n])
 	{
 		table[n] = ft_moveup(table[n]);
-		table[n] = ft_moveleft(table[n]);
+		table[n] = ft_moveleft(table[n], i, len);
 		n++;
 	}
-	ft_clean(table);
-	return(table);
+	ft_clean(table, i);
+	return (table);
 }

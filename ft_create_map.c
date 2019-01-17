@@ -6,36 +6,67 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/10 20:44:25 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/11 17:37:41 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/16 18:32:40 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft/libft.h"
 
-int		ft_minsize(int quantity)
+static int	ft_len(int i, char **table, int j)
 {
-	int		i;
-
-	i = 1;
-	quantity = quantity * 4;
-	while (quantity > (i * i))
-		++i;
+	while (table[j])
+	{
+		if (i == 3)
+		{
+			if (ft_isalpha(table[j][0]) == 1 && ft_isalpha(table[j][1]) == 1
+					&& ft_isalpha(table[j][2]) == 1
+					&& ft_isalpha(table[j][3]) == 1)
+				i = 4;
+			if (ft_isalpha(table[j][0]) == 1 && ft_isalpha(table[j][2]) == 1
+					&& table[j][3] == '\n' && table[j][1] == '\n'
+					&& table[j][5] == '\n' && ft_isalpha(table[j][4]) == 1
+					&& ft_isalpha(table[j][6]) == 1)
+				i = 4;
+		}
+		if (i == 2)
+		{
+			if (ft_isalpha(table[j][0]) != 1 || ft_isalpha(table[j][1]) != 1
+					|| table[j][2] != '\n' || ft_isalpha(table[j][3]) != 1
+					|| ft_isalpha(table[j][4]) != 1)
+				i = 3;
+		}
+		j++;
+	}
 	return (i);
 }
 
-char	**ft_create_map(int size, char **map)
+int			ft_minsize(int quantity, char **table)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	quantity = quantity * 4;
+	while (quantity > (i * i))
+		++i;
+	i = ft_len(i, table, j);
+	return (i);
+}
+
+char		**ft_create_map(int size, char **map)
 {
 	int		i;
 	int		j;
 
 	j = 0;
-	if (!(map = (char **)malloc((sizeof(char*) * size + 1))))
+	if (!(map = (char**)malloc((sizeof(char*) * (size + 1)))))
 		return (NULL);
 	while (j < size)
 	{
 		i = 0;
-		map[j] = (char *)malloc((sizeof(char) * size + 1));
+		if (!(map[j] = (char*)malloc((sizeof(char) * (size + 1)))))
+			return (NULL);
 		while (i < size)
 			map[j][i++] = '.';
 		map[j][size] = '\0';
@@ -45,18 +76,13 @@ char	**ft_create_map(int size, char **map)
 	return (map);
 }
 
-//Checking if there are the necessary blank spaces on map
-//
-//Limit should be size of map minus 1 to take in account the /o and /n
-int		ft_check_map(char **map, char *str, t_point x, int limit)
+int			ft_check_map(char **map, char *str, t_point x, int limit)
 {
 	int		i;
 	int		start;
 
 	start = x.y;
 	i = 0;
-	//	if (x.x == limit && x.y == limit)
-	//		return (-1); these lines are necessary but they are in the main for now for length reasons. They can be in the solver function after. 
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\n' && (i++ || 1))
@@ -79,7 +105,7 @@ int		ft_check_map(char **map, char *str, t_point x, int limit)
 	return (1);
 }
 
-char	**ft_place(char **map, char *str, int x, int y)
+char		**ft_place(char **map, char *str, int x, int y)
 {
 	int		i;
 	int		start;
@@ -91,6 +117,11 @@ char	**ft_place(char **map, char *str, int x, int y)
 		if (str[i] == '\n')
 		{
 			++x;
+			if (map[x] == NULL)
+			{
+				map[0] = NULL;
+				return (NULL);
+			}
 			++i;
 			y = start;
 		}

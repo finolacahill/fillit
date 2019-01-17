@@ -1,18 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_1validate.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/15 12:53:10 by fcahill           #+#    #+#             */
+/*   Updated: 2019/01/16 18:36:17 by fcahill          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-static int ft_valide_len(const char *str)
+static int	ft_valide_len(const char *str, int dot, int htg)
 {
-	int i;
-	int dot;
-	int htg;
+	int		i;
 
 	i = 0;
-	//added the != '\n to take into account additional newlines at the beginning of file
 	while (str[0] != '\n' && i < 546 && str[i])
 	{
 		dot = 0;
 		htg = 0;
-		while (str[i] != '\n' || (str[i] == '\n' && (str[i + 1] == '.' || str[i + 1] == '#')))
+		while (str[i] != '\n' || (str[i] == '\n' && (str[i + 1] == '.'
+						|| str[i + 1] == '#')))
 		{
 			if (str[i] == '#')
 				htg++;
@@ -29,7 +39,7 @@ static int ft_valide_len(const char *str)
 	}
 	return (-1);
 }
-//I wrote this just to shorten ft_vaidate_tmn for the norme
+
 static int	ft_next(int i, int x, const char *str)
 {
 	while (x < 20)
@@ -41,8 +51,8 @@ static int	ft_next(int i, int x, const char *str)
 		i++;
 	return (i);
 }
-		
-static int ft_valide_tmn(const char *str, int i, int htg, int x)
+
+static int	ft_valide_tmn(const char *str, int i, int htg, int x)
 {
 	while (str[i])
 	{
@@ -69,19 +79,18 @@ static int ft_valide_tmn(const char *str, int i, int htg, int x)
 	return (1);
 }
 
-int ft_1validate(char *str)
+int			ft_1validate(char *str)
 {
-	int x;
-	int htg;
-	int i;
+	int		x;
+	int		htg;
+	int		i;
 
 	x = 0;
 	htg = 0;
 	i = 0;
-	//I added this line as it was still trying to solve with 27/28 tmn
 	if (ft_count_tmn(str) > 26 || ft_count_tmn(str) < 1)
 		return (-1);
-	if (ft_valide_len(str) == 1 && ft_valide_tmn(str, i, htg, x) == 1)
+	if (ft_valide_len(str, i, htg) == 1 && ft_valide_tmn(str, i, htg, x) == 1)
 		return (1);
-	return (-1);	
+	return (-1);
 }

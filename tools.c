@@ -6,18 +6,16 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 19:48:25 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/14 20:03:14 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/16 13:58:38 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft/libft.h"
-
-#define INIT_2 int i; int j; int t;
 
 void	ft_printmap(char **map, int size)
 {
-	int n;
+	int		n;
+
 	n = 0;
 	while (n < size)
 	{
@@ -50,7 +48,7 @@ t_point	ft_movepoints(int x, int y, int start, int end)
 
 char	**ft_findnewline(char **str, int i, int j)
 {
-	int search;
+	int		search;
 
 	search = 0;
 	while (str[i][j] != '\n')
@@ -65,14 +63,14 @@ char	**ft_findnewline(char **str, int i, int j)
 	return (str);
 }
 
-char	**ft_clean(char **str)
+char	**ft_clean(char **str, int i)
 {
-	INIT_2
+	int		j;
+	int		t;
 
-		i = 0;
 	while (str[i])
 	{
-		j  = 0;
+		j = 0;
 		t = 0;
 		while (t != 4)
 		{
@@ -91,4 +89,28 @@ char	**ft_clean(char **str)
 		i++;
 	}
 	return (str);
+}
+
+int		ft_count_tmn(char *str)
+{
+	int		htg;
+	int		tmn;
+	int		i;
+
+	htg = 0;
+	tmn = 0;
+	i = 0;
+	if (!str)
+		return (-1);
+	while (str[i])
+	{
+		while (str[i] == '#')
+		{
+			htg++;
+			i++;
+		}
+		i++;
+	}
+	tmn = htg / 4;
+	return (tmn);
 }
