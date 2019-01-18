@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_freearray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/10 20:03:23 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/17 20:11:04 by fcahill          ###   ########.fr       */
+/*   Created: 2019/01/16 13:53:06 by fcahill           #+#    #+#             */
+/*   Updated: 2019/01/18 13:48:35 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fillit.h"
 
-int		ft_atoi(const char *str)
+void	ft_freearray(char **array, int limit)
 {
-	int i;
-	int result;
-	int neg;
+	int	i;
 
 	i = 0;
-	result = 0;
-	neg = 1;
-	while (ft_isspace(str[i]) != 0)
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	while (i <= limit)
 	{
-		if (str[i] == '-')
-			neg = -1;
-		++i;
-	}
-	while ((str[i] >= '0') && (str[i] <= '9'))
-	{
-		result = (str[i] - '0') + (result * 10);
+		free(array[i]);
 		i++;
 	}
-	return (result * neg);
+	free(array);
+}
+
+int		ft_error(void)
+{
+	ft_putstr("error\n");
+	return (0);
 }

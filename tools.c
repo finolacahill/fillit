@@ -6,13 +6,13 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/14 19:48:25 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/17 13:37:46 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/18 19:04:59 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_printmap(char **map, int size)
+void		ft_printmap(char **map, int size)
 {
 	int		n;
 
@@ -25,7 +25,7 @@ void	ft_printmap(char **map, int size)
 	}
 }
 
-t_point	ft_movepoints(int x, int y, int start, int end)
+t_point		ft_movepoints(int x, int y, int start, int end)
 {
 	t_point	q;
 
@@ -46,7 +46,7 @@ t_point	ft_movepoints(int x, int y, int start, int end)
 	return (q);
 }
 
-char	**ft_findnewline(char **str, int i, int j)
+static char	**ft_findnewline(char **str, int i, int j)
 {
 	int		search;
 
@@ -63,7 +63,7 @@ char	**ft_findnewline(char **str, int i, int j)
 	return (str);
 }
 
-char	**ft_clean(char **str, int i)
+char		**ft_clean(char **str, int i)
 {
 	int		j;
 	int		t;
@@ -91,7 +91,7 @@ char	**ft_clean(char **str, int i)
 	return (str);
 }
 
-int		ft_count_tmn(char *str)
+int			ft_count_tmn(char *str)
 {
 	int		htg;
 	int		tmn;
@@ -113,4 +113,23 @@ int		ft_count_tmn(char *str)
 	}
 	tmn = htg / 4;
 	return (tmn);
+}
+
+void	ft_freearray(char **array, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i <= limit)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+int		ft_error(void)
+{
+	ft_putstr("error\n");
+	return (0);
 }

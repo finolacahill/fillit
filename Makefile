@@ -6,41 +6,42 @@
 #    By: fcahill <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/15 10:30:02 by fcahill           #+#    #+#              #
-#    Updated: 2019/01/16 19:57:41 by fcahill          ###   ########.fr        #
+#    Updated: 2019/01/18 19:05:08 by fcahill          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
+SRC =    ft_1validate.c		\
+		 ft_create_map.c	\
+		 main.c				\
+		 ft_savetotable.c	\
+		 ft_solver.c 		\
+		 tools.c			\
+
+OBJ = $(SRC:.c=.o)
+
+INCLUDE = ./
+
 CC = gcc
 
-SRCS = ft_1validate.c \
-	   ft_create_map.c \
-	   ft_savetotable.c \
-	   ft_solver.c \
-	   ft_freearray.c \
-	   tools.c \
-	   main.c \
-
-OBJ = $(SRCS:.c=.o)
-
-FLAGS = -Wall -Werror -Wextra
-
-HEADER = -I libft/
-
-LIB = libft/ 
+FLAG = -Wall -Werror -Wextra
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HEAD)
-	@make -C libft/ && make clean -C libft/
-	$(CC) -o $(NAME) $(OBJ) -L $(LIB) -lft
+check:
+	@make -C ./libft
 
-clean: 
-	/bin/rm -f $(OBJ)
+$(NAME): $(OBJ) check
+	@$(CC) $(FLAG) $(OBJ) ./libft/libft.a -I $(INCLUDE) -o $(NAME)
+
+clean:
+	make clean -C ./libft
+	rm -f $(OBJ)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	make fclean -C ./libft
+	rm -f $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 13:48:14 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/17 13:48:18 by fcahill          ###   ########.fr       */
+/*   Updated: 2019/01/17 19:56:50 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	ft_valide_len(const char *str, int dot, int htg)
 	{
 		dot = 0;
 		htg = 0;
-		while (str[i] && (str[i] == '.' || str[i] == '#' || (str[i] == '\n'
+		while (str[i] && ((str[i] == '.' || str[i] == '#') || (str[i] == '\n'
 				&& (str[i + 1] == '.' || str[i + 1] == '#'))))
 		{
 			if (str[i] == '#')

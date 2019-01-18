@@ -3,47 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcahill <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fcahill  <fboudyaf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/17 13:46:44 by fcahill           #+#    #+#             */
-/*   Updated: 2019/01/17 13:46:47 by fcahill          ###   ########.fr       */
+/*   Created: 2019/01/10 20:44:25 by fcahill           #+#    #+#             */
+/*   Updated: 2019/01/18 19:02:19 by fcahill          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-static int	ft_len(int i, char **table, int j)
+static int		ft_len(int i, char **table, int j)
 {
-	while (table[j])
+	j = 0;
+	if (i == 2)
 	{
-		if (i == 3)
-		{
-			if (ft_isalpha(table[j][0]) == 1 && ft_isalpha(table[j][1]) == 1
-					&& ft_isalpha(table[j][2]) == 1
-					&& ft_isalpha(table[j][3]) == 1)
-				i = 4;
-			if (ft_isalpha(table[j][0]) == 1 && ft_isalpha(table[j][2]) == 1
-					&& table[j][3] == '\n' && table[j][1] == '\n'
-					&& table[j][5] == '\n' && ft_isalpha(table[j][4]) == 1
-					&& ft_isalpha(table[j][6]) == 1)
-				i = 4;
-		}
-		if (i == 2)
-		{
-			if (ft_isalpha(table[j][0]) != 1 || ft_isalpha(table[j][1]) != 1
-					|| table[j][2] != '\n' || ft_isalpha(table[j][3]) != 1
-					|| ft_isalpha(table[j][4]) != 1)
-				i = 3;
-		}
-		j++;
+		if (ft_isalpha(table[j][0]) != 1 || ft_isalpha(table[j][1]) != 1
+				|| table[j][2] != '\n' || ft_isalpha(table[j][3]) != 1
+				|| ft_isalpha(table[j][4]) != 1)
+			i = 3;
+	}
+	if (i == 3)
+	{
+		if (ft_isalpha(table[j][0]) == 1 && ft_isalpha(table[j][1]) == 1
+				&& ft_isalpha(table[j][2]) == 1
+				&& ft_isalpha(table[j][3]) == 1)
+			i = 4;
+		if (i == 3 && ft_isalpha(table[j][0]) == 1
+				&& ft_isalpha(table[j][2]) == 1
+				&& table[j][3] == '\n' && table[j][1] == '\n'
+				&& table[j][5] == '\n' && ft_isalpha(table[j][4]) == 1
+				&& ft_isalpha(table[j][6]) == 1)
+			i = 4;
 	}
 	return (i);
 }
 
-int			ft_minsize(int quantity, char **table)
+int				ft_minsize(int quantity, char **table)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	i = 0;
 	j = 0;
@@ -54,10 +52,10 @@ int			ft_minsize(int quantity, char **table)
 	return (i);
 }
 
-char		**ft_create_map(int size, char **map)
+char			**ft_create_map(int size, char **map)
 {
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	j = 0;
 	if (!(map = (char**)malloc((sizeof(char*) * (size + 1)))))
@@ -76,10 +74,10 @@ char		**ft_create_map(int size, char **map)
 	return (map);
 }
 
-int			ft_check_map(char **map, char *str, t_point x, int limit)
+int				ft_check_map(char **map, char *str, t_point x, int limit)
 {
-	int		i;
-	int		start;
+	int			i;
+	int			start;
 
 	start = x.y;
 	i = 0;
@@ -105,10 +103,10 @@ int			ft_check_map(char **map, char *str, t_point x, int limit)
 	return (1);
 }
 
-char		**ft_place(char **map, char *str, int x, int y)
+char			**ft_place(char **map, char *str, int x, int y)
 {
-	int		i;
-	int		start;
+	int			i;
+	int			start;
 
 	i = 0;
 	start = y;
