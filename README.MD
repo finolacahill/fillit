@@ -45,5 +45,6 @@ A.B
 ABB
 ```
 
+I have included some valid input files in the folder "test_files". In order to create invalid files simply add or subtract a dot or hashtag, add additional newlines or incorrect chars, create an invalid shape, get creative!
 
 Please see [this PDF](https://github.com/finolacahill/fillit/blob/master/fillit.en.pdf) for further details. 
