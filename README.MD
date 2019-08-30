@@ -14,6 +14,7 @@ Fillit will take a file with tetrimonis as an executible. The input must follow 
 Otherwise, Fillit will take the pieces and print on the stdout the smallest possible competed square map. The first tetris piece will be represented by A, the next by B etc. 
 i.e.
 
+'''bash
 ##..
 
 #...
@@ -30,7 +31,7 @@ i.e.
 ..##
 
 ....
-
+'''
 
 
 becomes
